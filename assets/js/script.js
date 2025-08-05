@@ -1,10 +1,11 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle
+    // Mobile Navigation Toggle - Melhorado
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
 
     navToggle.addEventListener('click', function() {
         navMenu.classList.toggle('active');
+        document.body.classList.toggle('nav-open');
         
         // Animate hamburger menu
         const bars = navToggle.querySelectorAll('.bar');
@@ -25,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
         link.addEventListener('click', () => {
             navMenu.classList.remove('active');
+            document.body.classList.remove('nav-open');
             const bars = navToggle.querySelectorAll('.bar');
             bars.forEach(bar => {
                 bar.style.transform = 'none';
@@ -32,6 +34,50 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            document.body.classList.remove('nav-open');
+            const bars = navToggle.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.style.transform = 'none';
+                bar.style.opacity = '1';
+            });
+        }
+    });
+
+    // Responsive header adjustment
+    function adjustHeaderForMobile() {
+        const header = document.querySelector('.header');
+        const isMobile = window.innerWidth <= 768;
+        
+        if (isMobile) {
+            header.style.padding = '0';
+        } else {
+            header.style.padding = '';
+        }
+    }
+
+    // Window resize handler
+    window.addEventListener('resize', function() {
+        adjustHeaderForMobile();
+        
+        // Close mobile menu on resize to desktop
+        if (window.innerWidth > 768) {
+            navMenu.classList.remove('active');
+            document.body.classList.remove('nav-open');
+            const bars = navToggle.querySelectorAll('.bar');
+            bars.forEach(bar => {
+                bar.style.transform = 'none';
+                bar.style.opacity = '1';
+            });
+        }
+    });
+
+    // Initial mobile adjustment
+    adjustHeaderForMobile();
 
     // Header scroll effect
     window.addEventListener('scroll', function() {
@@ -51,9 +97,12 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
+                const headerHeight = document.querySelector('.header').offsetHeight;
+                const targetPosition = target.offsetTop - headerHeight;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
                 });
             }
         });
@@ -250,4 +299,32 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => loader.remove(), 300);
         }
     });
+
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    document.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    document.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        if (touchEndX < touchStartX - 50) {
+            // Swipe left - close menu
+            navMenu.classList.remove('active');
+            document.body.classList.remove('nav-open');
+        }
+        if (touchEndX > touchStartX + 50) {
+            // Swipe right - open menu (only if near edge)
+            if (touchStartX < 50) {
+                navMenu.classList.add('active');
+                document.body.classList.add('nav-open');
+            }
+        }
+    }
 });

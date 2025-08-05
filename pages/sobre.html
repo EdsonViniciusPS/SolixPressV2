@@ -163,13 +163,146 @@
             color: #F20F79;
             transform: translateY(-3px);
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .sobre-content {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
+            
+            .valores-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-sobre {
+                height: 80vh;
+                padding: 2rem 0;
+            }
+            
+            .hero-sobre h1 {
+                font-size: clamp(2rem, 6vw, 2.8rem);
+                margin-bottom: 1rem;
+            }
+            
+            .hero-sobre p {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+            
+            .sobre-section,
+            .valores-section,
+            .cta-sobre {
+                padding: 3rem 0;
+            }
+            
+            .sobre-section h2,
+            .valores-section h2,
+            .cta-sobre h2 {
+                font-size: clamp(1.8rem, 5vw, 2.2rem);
+            }
+            
+            .sobre-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .sobre-text {
+                order: 2;
+            }
+            
+            .sobre-image {
+                order: 1;
+            }
+            
+            .valores-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .valor-card {
+                padding: 1.5rem;
+            }
+            
             .cta-buttons {
                 flex-direction: column;
-                gap: 0.5rem;
+                gap: 1rem;
+                align-items: center;
+            }
+            
+            .cta-buttons a {
+                width: 100%;
+                max-width: 280px;
+                text-align: center;
+            }
+            
+            .finalizacao-preimpressao-section > .container > div {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+            
+            .finalizacao-preimpressao-section > .container > div > div {
+                min-width: auto;
+                padding: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-sobre {
+                height: 70vh;
+                padding: 1rem;
+            }
+            
+            .hero-sobre h1 {
+                font-size: clamp(1.6rem, 7vw, 2.2rem);
+            }
+            
+            .hero-sobre p {
+                font-size: 1rem;
+                padding: 0 0.5rem;
+            }
+            
+            .sobre-section,
+            .valores-section,
+            .cta-sobre {
+                padding: 2.5rem 0;
+            }
+            
+            .valor-card {
+                padding: 1.2rem;
+            }
+            
+            .valor-icon {
+                font-size: 1.5rem;
+            }
+            
+            .valor-title {
+                font-size: 1.1rem;
+            }
+            
+            .valor-text {
+                font-size: 0.9rem;
+            }
+            
+            .cta-sobre h2 {
+                font-size: clamp(1.5rem, 6vw, 2rem);
+            }
+            
+            .cta-sobre p {
+                font-size: 1rem;
+            }
+            
+            .finalizacao-preimpressao-section > .container > div > div {
+                padding: 1.2rem;
+            }
+            
+            .finalizacao-preimpressao-section > .container > div > div h3 {
+                font-size: 1.3rem;
+            }
+            
+            .finalizacao-preimpressao-section > .container > div > div p {
+                font-size: 1rem;
             }
         }
     </style>
