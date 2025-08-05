@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - SolixPress | Agência de Arte Finalização</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Estilos exclusivos para a página Sobre */
+        .hero-sobre {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            background: linear-gradient(120deg, rgba(3,76,140,0.8), rgba(242,15,121,0.8)), url('../assets/images/background/img-1.jpg') center/cover no-repeat;
+        }
+        .hero-sobre h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            /* Gradiente atualizado para combinar com a logo e destacar do fundo */
+            background: linear-gradient(90deg, #DA1057 0%, #00AEC4 40%, #D0D81D 70%, #E78824 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-sobre p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .sobre-section {
+            padding: 4rem 0;
+            background: #f8f9fa;
+        }
+        .sobre-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, #F20F79, #034C8C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .sobre-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+        .sobre-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+        }
+        .sobre-text strong {
+            color: #F20F79;
+        }
+        .sobre-image {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        .sobre-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .valores-section {
+            padding: 4rem 0;
+            background: linear-gradient(120deg, #fff 60%, #F2811D 100%);
+            text-align: center;
+        }
+        .valores-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #034C8C;
+        }
+        .valores-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        .valor-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .valor-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+        .valor-icon {
+            font-size: 2rem;
+            color: #F20F79;
+            margin-bottom: 1rem;
+        }
+        .valor-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #034C8C;
+        }
+        .valor-text {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+        .cta-sobre {
+            padding: 4rem 0;
+            background: #034C8C;
+            color: white;
+            text-align: center;
+        }
+        .cta-sobre h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .cta-sobre p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .cta-buttons a {
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .cta-buttons .btn-primary {
+            background: linear-gradient(45deg, #F20F79, #F2811D);
+            color: white;
+            box-shadow: 0 10px 30px rgba(242, 15, 121, 0.3);
+        }
+        .cta-buttons .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(242, 15, 121, 0.4);
+        }
+        .cta-buttons .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        .cta-buttons .btn-outline:hover {
+            background: white;
+            color: #F20F79;
+            transform: translateY(-3px);
+        }
+        @media (max-width: 768px) {
+            .sobre-content {
+                grid-template-columns: 1fr;
+            }
+            .cta-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <img src="../assets/icons/SVG/logo_solixpress_padrao_horizontal_color_fdo_claro.svg" alt="SolixPress" class="logo">
+                </div>
+                <div class="nav-menu" id="nav-menu">
+                    <a href="../index.html" class="nav-link">Início</a>
+                    <a href="sobre.html" class="nav-link active">Sobre</a>
+                    <a href="../index.html#servicos" class="nav-link">Serviços</a>
+                    <a href="../index.html#parceiros" class="nav-link">Empresas Parceiras</a>
+                    <a href="../index.html#contato" class="nav-link">Contato</a>
+                </div>
+                <div class="nav-toggle" id="nav-toggle">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-sobre">
+        <div class="container">
+            <h1>Sobre a SolixPress</h1>
+            <p>
+                Transformamos ideias em realidade visual. Somos uma agência apaixonada por design, inovação e excelência, criando soluções que conectam marcas e pessoas.
+            </p>
+        </div>
+    </section>
+
+    <!-- Sobre a Empresa -->
+    <section class="sobre-section">
+        <div class="container">
+            <h2>Quem Somos</h2>
+            <div class="sobre-content">
+                <div class="sobre-text">
+                    <p>
+                        Na <strong>SolixPress</strong>, acreditamos que cada projeto é uma oportunidade de criar algo único e memorável. Desde <strong>2012</strong>, temos ajudado empresas a se destacarem no mercado com soluções visuais impactantes e personalizadas.
+                    </p>
+                    <p>
+                        Nossa equipe é composta por especialistas apaixonados por design, que combinam criatividade e técnica para entregar resultados que superam expectativas. Seja no digital ou no impresso, estamos prontos para transformar suas ideias em realidade.
+                    </p>
+                </div>
+                <div class="sobre-image">
+                    <img src="../assets/images/background/img_about1-1.jpg" alt="Equipe SolixPress">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arte-Finalização e Pré-Impressão -->
+    <section class="finalizacao-preimpressao-section" style="background: #fff; padding: 4rem 0;">
+        <div class="container">
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; align-items: flex-start;">
+                <div style="flex:1; min-width:260px; background: #f8f9fa; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 24px rgba(3,76,140,0.07);">
+                    <h3 style="color: #F20F79; font-size: 1.5rem; margin-bottom: 1rem;">Arte-Finalização</h3>
+                    <p style="color: #555; font-size: 1.08rem;">
+                        É o ato de dar o polimento final a um arquivo, incluindo checagens de resolução, cores, formatos, sangrias, margens de segurança e outros detalhes técnicos, tornando-o pronto para impressão.
+                    </p>
+                </div>
+                <div style="flex:1; min-width:260px; background: #f8f9fa; border-radius: 16px; padding: 2rem; box-shadow: 0 8px 24px rgba(3,76,140,0.07);">
+                    <h3 style="color: #034C8C; font-size: 1.5rem; margin-bottom: 1rem;">Pré-Impressão</h3>
+                    <p style="color: #555; font-size: 1.08rem;">
+                        É um termo mais abrangente que engloba a arte-finalização como uma etapa crucial, mas também pode incluir a inspeção visual e técnica do arquivo por um profissional qualificado e o uso de softwares de pré-impressão para identificar e corrigir problemas antes da impressão.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Valores da Empresa -->
+    <section class="valores-section">
+        <div class="container">
+            <h2>Nossos Valores</h2>
+            <div class="valores-grid">
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-lightbulb"></i></div>
+                    <div class="valor-title">Inovação</div>
+                    <div class="valor-text">Buscamos constantemente novas ideias e soluções criativas para nossos clientes.</div>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-heart"></i></div>
+                    <div class="valor-title">Paixão</div>
+                    <div class="valor-text">Amamos o que fazemos e colocamos dedicação em cada detalhe de nossos projetos.</div>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="valor-title">Compromisso</div>
+                    <div class="valor-text">Estamos comprometidos com a qualidade, prazos e a satisfação de nossos clientes.</div>
+                </div>
+                <div class="valor-card">
+                    <div class="valor-icon"><i class="fas fa-star"></i></div>
+                    <div class="valor-title">Excelência</div>
+                    <div class="valor-text">Nosso objetivo é sempre entregar o melhor, superando expectativas.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-sobre">
+        <div class="container">
+            <h2>Pronto para transformar suas ideias?</h2>
+            <p>Entre em contato conosco e descubra como podemos ajudar sua marca a se destacar.</p>
+            <div class="cta-buttons">
+                <a href="../index.html#contato" class="btn btn-primary">Fale Conosco</a>
+                <a href="../index.html#parceiros" class="btn btn-outline">Veja Nossos Parceiros</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <img src="../assets/icons/SVG/logo_solixpress_padrao_horizontal_color_fdo_claro.svg" alt="SolixPress" class="footer-logo">
+                    <p>Transformando ideias em arte desde 2012</p>
+                    <p style="font-size:1rem; color:#bbb; margin-top:0.5rem;">
+                        <i class="fas fa-envelope"></i> solix@solixpress.com.br
+                    </p>
+                </div>
+                <div class="footer-links">
+                    <h4>Links Rápidos</h4>
+                    <a href="../index.html">Início</a>
+                    <a href="sobre.html">Sobre</a>
+                    <a href="../index.html#servicos">Serviços</a>
+                    <a href="../index.html#contato">Contato</a>
+                </div>
+                <div class="footer-social">
+                    <h4>Redes Sociais</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/solixpress/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 SolixPress. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+</html>
