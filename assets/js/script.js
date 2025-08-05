@@ -1,16 +1,35 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile Navigation Toggle - Melhorado
+    // MENU MOBILE - Implementação Robusta
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
+    const body = document.body;
+    let isMenuOpen = false;
 
-    navToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        document.body.classList.toggle('nav-open');
-        
-        // Animate hamburger menu
+    // Função para abrir menu
+    function openMenu() {
+        navMenu.classList.add('active');
+        body.classList.add('nav-open');
+        isMenuOpen = true;
+        animateHamburger(true);
+        // Prevenir scroll do body quando menu aberto
+        body.style.overflow = 'hidden';
+    }
+
+    // Função para fechar menu
+    function closeMenu() {
+        navMenu.classList.remove('active');
+        body.classList.remove('nav-open');
+        isMenuOpen = false;
+        animateHamburger(false);
+        // Restaurar scroll do body
+        body.style.overflow = '';
+    }
+
+    // Animação do hamburger
+    function animateHamburger(isOpen) {
         const bars = navToggle.querySelectorAll('.bar');
         bars.forEach((bar, index) => {
-            if (navMenu.classList.contains('active')) {
+            if (isOpen) {
                 if (index === 0) bar.style.transform = 'rotate(-45deg) translate(-5px, 6px)';
                 if (index === 1) bar.style.opacity = '0';
                 if (index === 2) bar.style.transform = 'rotate(45deg) translate(-5px, -6px)';
@@ -19,36 +38,88 @@ document.addEventListener('DOMContentLoaded', function() {
                 bar.style.opacity = '1';
             }
         });
-    });
+    }
 
-    // Close mobile menu when clicking on links
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            document.body.classList.remove('nav-open');
-            const bars = navToggle.querySelectorAll('.bar');
-            bars.forEach(bar => {
-                bar.style.transform = 'none';
-                bar.style.opacity = '1';
+    // Toggle menu no clique
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            isMenuOpen ? closeMenu() : openMenu();
+        });
+
+        // Fechar menu quando clicar nos links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    closeMenu();
+                }
             });
         });
-    });
 
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(e) {
-        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.classList.remove('active');
-            document.body.classList.remove('nav-open');
-            const bars = navToggle.querySelectorAll('.bar');
-            bars.forEach(bar => {
-                bar.style.transform = 'none';
-                bar.style.opacity = '1';
-            });
+        // Fechar menu quando clicar fora (apenas mobile)
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && isMenuOpen) {
+                if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                    closeMenu();
+                }
+            }
+        });
+
+        // Touch gestures para mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            if (window.innerWidth <= 768) {
+                touchEndX = e.changedTouches[0].screenX;
+                touchEndY = e.changedTouches[0].screenY;
+                handleSwipe();
+            }
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const verticalSwipeThreshold = 100;
+            const horizontalDistance = Math.abs(touchEndX - touchStartX);
+            const verticalDistance = Math.abs(touchEndY - touchStartY);
+
+            // Evitar conflito com scroll vertical
+            if (verticalDistance > verticalSwipeThreshold) return;
+
+            // Swipe left para fechar menu
+            if (touchEndX < touchStartX - swipeThreshold && isMenuOpen) {
+                closeMenu();
+            }
+            // Swipe right para abrir menu (apenas da borda esquerda)
+            else if (touchEndX > touchStartX + swipeThreshold && 
+                     !isMenuOpen && 
+                     touchStartX < 50) {
+                openMenu();
+            }
         }
+    }
+
+    // Fechar menu automaticamente no resize para desktop
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+            if (window.innerWidth > 768 && isMenuOpen) {
+                closeMenu();
+            }
+            adjustHeaderForMobile();
+        }, 150);
     });
 
-    // Responsive header adjustment
+    // Ajuste responsivo do header
     function adjustHeaderForMobile() {
         const header = document.querySelector('.header');
         const isMobile = window.innerWidth <= 768;
@@ -57,48 +128,54 @@ document.addEventListener('DOMContentLoaded', function() {
             header.style.padding = '0';
         } else {
             header.style.padding = '';
+            // Garantir que menu esteja visível no desktop
+            if (navMenu) navMenu.style.display = '';
         }
     }
 
-    // Window resize handler
-    window.addEventListener('resize', function() {
-        adjustHeaderForMobile();
-        
-        // Close mobile menu on resize to desktop
-        if (window.innerWidth > 768) {
-            navMenu.classList.remove('active');
-            document.body.classList.remove('nav-open');
-            const bars = navToggle.querySelectorAll('.bar');
-            bars.forEach(bar => {
-                bar.style.transform = 'none';
-                bar.style.opacity = '1';
-            });
-        }
-    });
-
-    // Initial mobile adjustment
+    // Inicialização
     adjustHeaderForMobile();
 
-    // Header scroll effect
-    window.addEventListener('scroll', function() {
+    // Header scroll effect - Melhorado
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function updateHeader() {
         const header = document.querySelector('.header');
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(255, 255, 255, 0.98)';
-            header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-        } else {
-            header.style.background = 'rgba(255, 255, 255, 0.95)';
-            header.style.boxShadow = 'none';
+        if (header) {
+            const scrollY = window.scrollY;
+            
+            if (scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+                header.style.backdropFilter = 'blur(20px)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+                header.style.backdropFilter = 'blur(10px)';
+            }
+        }
+        ticking = false;
+    }
+
+    window.addEventListener('scroll', function() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeader);
+            ticking = true;
         }
     });
 
-    // Smooth scrolling for anchor links
+    // Smooth scrolling otimizado
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
                 const headerHeight = document.querySelector('.header').offsetHeight;
-                const targetPosition = target.offsetTop - headerHeight;
+                const targetPosition = target.offsetTop - headerHeight - 20;
+                
+                // Fechar menu mobile se estiver aberto
+                if (isMenuOpen) closeMenu();
                 
                 window.scrollTo({
                     top: targetPosition,
@@ -186,19 +263,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Intersection Observer for animations
+    // Performance otimizada para intersection observer
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
 
+    let isObserverActive = true;
     const observer = new IntersectionObserver((entries) => {
+        if (!isObserverActive) return;
+        
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                const element = entry.target;
+                
+                // Evitar re-animação
+                if (element.classList.contains('animated')) return;
+                element.classList.add('animated');
+                
+                element.style.animation = 'fadeInUp 0.6s ease forwards';
                 
                 // Animate counters when stats section is visible
-                if (entry.target.classList.contains('stats')) {
+                if (element.classList.contains('stats')) {
                     animateCounters();
                 }
             }
@@ -206,9 +292,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
 
     // Observe elements for animation
-    document.querySelectorAll('.service-card, .portfolio-item, .stats, .about-text').forEach(el => {
+    document.querySelectorAll('.service-card, .portfolio-item, .stats, .about-text, .partner-item').forEach(el => {
         observer.observe(el);
     });
+
+    // Desativar observer em dispositivos de baixa performance
+    if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+        isObserverActive = false;
+    }
 
     // Typing effect for hero title
     function typeWriter(element, text, speed = 100) {
@@ -299,32 +390,4 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => loader.remove(), 300);
         }
     });
-
-    // Touch/swipe support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    document.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
-
-    document.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    });
-
-    function handleSwipe() {
-        if (touchEndX < touchStartX - 50) {
-            // Swipe left - close menu
-            navMenu.classList.remove('active');
-            document.body.classList.remove('nav-open');
-        }
-        if (touchEndX > touchStartX + 50) {
-            // Swipe right - open menu (only if near edge)
-            if (touchStartX < 50) {
-                navMenu.classList.add('active');
-                document.body.classList.add('nav-open');
-            }
-        }
-    }
 });

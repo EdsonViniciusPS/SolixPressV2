@@ -173,22 +173,30 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 1.5rem;
             }
+            
+            .hero-sobre {
+                height: 70vh;
+                min-height: 500px;
+            }
         }
 
         @media (max-width: 768px) {
             .hero-sobre {
-                height: 80vh;
-                padding: 2rem 0;
+                height: 60vh;
+                min-height: 400px;
+                padding: 2rem 1rem;
             }
             
             .hero-sobre h1 {
-                font-size: clamp(2rem, 6vw, 2.8rem);
+                font-size: clamp(1.8rem, 6vw, 2.8rem);
                 margin-bottom: 1rem;
+                line-height: 1.2;
             }
             
             .hero-sobre p {
-                font-size: 1.1rem;
-                padding: 0 1rem;
+                font-size: 16px;
+                padding: 0 0.5rem;
+                line-height: 1.5;
             }
             
             .sobre-section,
@@ -201,6 +209,7 @@
             .valores-section h2,
             .cta-sobre h2 {
                 font-size: clamp(1.8rem, 5vw, 2.2rem);
+                margin-bottom: 1.5rem;
             }
             
             .sobre-content {
@@ -214,6 +223,7 @@
             
             .sobre-image {
                 order: 1;
+                border-radius: 12px;
             }
             
             .valores-grid {
@@ -223,44 +233,74 @@
             
             .valor-card {
                 padding: 1.5rem;
+                border-radius: 12px;
+                min-height: 140px;
+            }
+            
+            .valor-icon {
+                font-size: 1.8rem;
+                margin-bottom: 1rem;
+            }
+            
+            .valor-title {
+                font-size: 1.2rem;
+                margin-bottom: 0.8rem;
             }
             
             .cta-buttons {
                 flex-direction: column;
                 gap: 1rem;
                 align-items: center;
+                width: 100%;
             }
             
             .cta-buttons a {
                 width: 100%;
                 max-width: 280px;
                 text-align: center;
+                min-height: 48px;
+                padding: 12px 24px;
             }
             
-            .finalizacao-preimpressao-section > .container > div {
+            .finalizacao-preimpressao-section {
+                padding: 3rem 0 !important;
+            }
+            
+            .finalizacao-preimpressao-section .container > div {
                 flex-direction: column;
                 gap: 1.5rem;
             }
             
-            .finalizacao-preimpressao-section > .container > div > div {
+            .finalizacao-preimpressao-section .container > div > div {
                 min-width: auto;
                 padding: 1.5rem;
+            }
+            
+            .finalizacao-preimpressao-section .container > div > div h3 {
+                font-size: 1.4rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            .finalizacao-preimpressao-section .container > div > div p {
+                font-size: 15px !important;
+                line-height: 1.6 !important;
             }
         }
 
         @media (max-width: 480px) {
             .hero-sobre {
-                height: 70vh;
-                padding: 1rem;
+                height: 50vh;
+                min-height: 350px;
+                padding: 1rem 0.5rem;
             }
             
             .hero-sobre h1 {
-                font-size: clamp(1.6rem, 7vw, 2.2rem);
+                font-size: clamp(1.5rem, 7vw, 2.2rem);
             }
             
             .hero-sobre p {
-                font-size: 1rem;
-                padding: 0 0.5rem;
+                font-size: 14px;
+                padding: 0 0.25rem;
             }
             
             .sobre-section,
@@ -271,6 +311,7 @@
             
             .valor-card {
                 padding: 1.2rem;
+                min-height: 120px;
             }
             
             .valor-icon {
@@ -282,28 +323,103 @@
             }
             
             .valor-text {
-                font-size: 0.9rem;
+                font-size: 14px;
             }
             
             .cta-sobre h2 {
-                font-size: clamp(1.5rem, 6vw, 2rem);
+                font-size: clamp(1.4rem, 6vw, 2rem);
+                margin-bottom: 1rem;
             }
             
             .cta-sobre p {
-                font-size: 1rem;
+                font-size: 14px;
+                margin-bottom: 1.5rem;
             }
             
-            .finalizacao-preimpressao-section > .container > div > div {
+            .finalizacao-preimpressao-section .container > div > div {
                 padding: 1.2rem;
             }
             
-            .finalizacao-preimpressao-section > .container > div > div h3 {
-                font-size: 1.3rem;
+            .finalizacao-preimpressao-section .container > div > div h3 {
+                font-size: 1.2rem !important;
             }
             
-            .finalizacao-preimpressao-section > .container > div > div p {
-                font-size: 1rem;
+            .finalizacao-preimpressao-section .container > div > div p {
+                font-size: 14px !important;
             }
+        }
+        
+        /* Landscape mobile para página sobre */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .hero-sobre {
+                height: 80vh;
+                padding: 1rem;
+            }
+            
+            .hero-sobre h1 {
+                font-size: 2.2rem;
+                margin-bottom: 0.5rem;
+            }
+            
+            .hero-sobre p {
+                font-size: 16px;
+                margin-bottom: 0;
+            }
+            
+            .valores-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+            
+            .cta-buttons a {
+                width: auto;
+                min-width: 160px;
+            }
+        }
+
+        /* Melhorias Responsivas Específicas da Página Sobre */
+        
+        /* Touch targets otimizados */
+        .cta-buttons a {
+            min-height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .valor-card {
+            cursor: pointer;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Container melhorado */
+        .finalizacao-preimpressao-section .container > div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+        
+        .finalizacao-preimpressao-section .container > div > div {
+            flex: 1;
+            min-width: 280px;
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(3,76,140,0.07);
+            transition: all 0.3s ease;
+        }
+        
+        .finalizacao-preimpressao-section .container > div > div:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 32px rgba(3,76,140,0.12);
         }
     </style>
 </head>
